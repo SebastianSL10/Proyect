@@ -1,0 +1,93 @@
+body {
+        background-color: #bcc4be;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+.formulario {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 350px;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+.formulario h1 {
+  font-size: 48px;
+  color: #fff;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  animation: neonGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  0% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+  }
+  100% {
+    text-shadow: 0 0 5px rgb(130, 229, 155), 0 0 10px rgb(117, 252, 128), 0 0 20px rgb(0, 255, 98), 0 0 30px rgb(70, 255, 79), 0 0 40px rgb(125, 255, 125), 0 0 50px #0ff, 0 0 60px #0ff;
+  }
+ }
+
+.formulario input[type="text"],
+.formulario input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f5f5f5;
+        color: #333333;
+        font-size: 16px;
+        outline: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+.formulario input[type="text"]::placeholder,
+.formulario input[type="password"]::placeholder {
+        color: #999999;
+    }
+
+.formulario button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4e97d9;
+        border: none;
+        border-radius: 5px;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+.formulario button:hover {
+        background-color: #437fbb;
+    }
+
+.formulario p {
+        font-size: 14px;
+        color: #e70f0f;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out infinite;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
