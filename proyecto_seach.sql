@@ -335,7 +335,8 @@ ALTER TABLE `persona_rol`
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`Id_producto`) REFERENCES `presentacion` (`Id_Presentacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`Id_producto`) REFERENCES `presentacion` (`Id_Presentacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`Id_producto`) REFERENCES `categorias` (`Id_Categoria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `salida`
