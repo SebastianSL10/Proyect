@@ -59,6 +59,14 @@ CREATE TABLE `detalle_salida` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+-- Estructura de tabla para la tabla `lote`
+--
+
+CREATE TABLE `lote` (
+  `Id_Lote` int(6) NOT NULL,
+  `Fecha_Vencimiento` date NOT NULL,
+  `Cant_lote` int(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Estructura de tabla para la tabla `ingreso`
@@ -67,22 +75,11 @@ CREATE TABLE `detalle_salida` (
 CREATE TABLE `ingreso` (
   `Id_Ingreso` int(10) NOT NULL,
   `Fecha_ingreso` date NOT NULL,
-  `Cant_producto` int(10) NOT NULL
+  `Cant_producto` int(10) NOT NULL,
+  `Id_Lote` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `lote`
---
-
-CREATE TABLE `lote` (
-  `Id_Lote` int(6) NOT NULL,
-  `Fecha_Vencimiento` date NOT NULL,
-  `Cant_lote` int(7) NOT NULL,
-  `Id_Ingreso` int(7) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+-- 
 -- --------------------------------------------------------
 
 --
@@ -323,8 +320,8 @@ ALTER TABLE `detalle_salida`
 --
 -- Filtros para la tabla `lote`
 --
-ALTER TABLE `lote`
-  ADD CONSTRAINT `lote_ibfk_1` FOREIGN KEY (`Id_Lote`) REFERENCES `ingreso` (`Id_Ingreso`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ingreso`
+  ADD CONSTRAINT `ingreso_ibfk_1` FOREIGN KEY (`Id_Ingreso`) REFERENCES `lote` (`Id_Lote`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `persona_rol`
