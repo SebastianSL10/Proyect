@@ -1,0 +1,786 @@
+openapi: 3.0.1
+info:
+  title: API del Proyecto Seach.
+  description: |-
+    Este es un servidor de inventario de limpieza de muestra basado en la especificación OpenAPI 3.0. Esta API se ancarga de manejar la informacion de la empresa R&R Clean, en base al Proyecto Seach.
+  
+      _Si está buscando la versión Swagger 2.0/OAS 2.0 de Proyecto Seach, haga clic [aquí](link swagger ). Alternativamente, puede cargar a través de la opción de menú `Editar > Cargar Proyecto Seach OAS 2.0`!_
+    
+      Algunos enlaces útiles::
+    - [Repositorio Proyecto Seach ](https://github.com/SebastianSL10/Proyect.git)
+    - [La definición de API de origen para el Proyecto Seach](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  version: 1.0.0
+servers:
+- url: https://php-react.000webhostapp.com/api.php?
+
+tags:
+  - name: Presentacion
+    description: Maneja la información de las presentaciones de los productos.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Productos
+    description: Maneja la información de los productos del inventario.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Persona
+    description: Maneja la información de las personas relacionadas con el sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io      
+  - name: Rol
+    description: Maneja los roles del sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io  
+  - name: Persona_Rol
+    description: Maneja los detalles de los roles que usan las personas en el sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io  
+  - name: Categorias
+    description: Maneja las categorias de los productos.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io 
+  - name: Ingreso
+    description: Maneja los ingresos de productos dentro del sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io  
+  - name: Detalle_Ingreso
+    description: Maneja la información de los ingresos que se hacen en el sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io  
+  - name: Salida
+    description: Maneja la salida de los productos del sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Detalle_Salida
+    description: Maneja la información y detalles de las salidas que se hacen en el sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io      
+  - name: Lote
+    description: Gestiona la información de los lotes de los productos del sistema.
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+
+paths:
+  /apicall=createpresentacion:
+    post:
+      tags:
+      - Presentacion
+      summary: Inserta información de nueva presentacion en la base de datos
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Presentacion'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Presentacion'
+        required: true
+      responses:
+        200:
+          description: (OK) La información de la presentacion se guardo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPresentacionPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /{apicall=readpresentacion}:
+    get:
+      tags:
+      - Presentacion
+      summary: Obtiene la infomación de la base de datos de una presentación.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=readpresentacion
+        in: path
+        description: Identificador de la presentación a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información de la presentacion se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Presentacion'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Presentacion'        
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /{apicall=updatepresentacion}:
+    post:
+      tags:
+      - Presentacion
+      summary: Actualiza la informacion de una presentación en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=updatepresentacion
+        in: path
+        description: Identificador de la presentación a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Presentacion'
+        
+      responses:
+        200:
+          description: (OK) La información de la presentación se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Presentacion'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Presentacion'          
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /{apicall=deletepresentacion}:
+    post:
+      tags:
+        - Presentacion
+      summary: Elimina logicamente una presentación.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=deletepresentacion
+        in: path
+        description: Identificador de la presentación a obtener
+        required: true
+        schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: (OK) La presentación se eliminó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPresentacionPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /apicall=createpersona:
+    post:
+      tags:
+      - Persona
+      summary: Inserta información de nueva persona en la base de datos
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Persona'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Persona'
+        required: true
+      responses:
+        200:
+          description: (OK) La información de la nueva persona se guardó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /{apicall=readpersona}:
+    get:
+      tags:
+      - Persona
+      summary: Obtiene la información de la base de datos de una persona.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=readpersona
+        in: path
+        description: Identificador de la persona a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información de la persona se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Persona'        
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /{apicall=updatepersona}:
+    post:
+      tags:
+      - Persona
+      summary: Actualiza la informacion de una persona en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=updatepersona
+        in: path
+        description: Identificador de la persona a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        
+      responses:
+        200:
+          description: (OK) La información de la persona se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Persona'          
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /{apicall=deletepersona}:
+    post:
+      tags:
+        - Persona
+      summary: Elimina logicamente una persona.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=deletepersona
+        in: path
+        description: Identificador de la persona a obtener
+        required: true
+        schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: (OK) La persona se eliminó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPersonaPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /apicall=createcategoria:
+    post:
+      tags:
+      - Categorias
+      summary: Inserta información de nueva categoria en la base de datos
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+        required: true
+      responses:
+        200:
+          description: (OK) La información de la nueva categoria se guardó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /{apicall=readcategoria}:
+    get:
+      tags:
+      - Categorias
+      summary: Obtiene la información de la base de datos de una categoria.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=readcategoria
+        in: path
+        description: Identificador de la categoria a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información de la categoria se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Categoria'        
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /{apicall=updatecategoria}:
+    post:
+      tags:
+      - Categorias
+      summary: Actualiza la informacion de una categoria en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=updatecategoria
+        in: path
+        description: Identificador de la categoria a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+        
+      responses:
+        200:
+          description: (OK) La información de la categoria se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Categoria'          
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /{apicall=deletecategoria}:
+    post:
+      tags:
+        - Categorias
+      summary: Elimina logicamente una categoria.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=deletecategoria
+        in: path
+        description: Identificador de la categoria a obtener
+        required: true
+        schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: (OK) La categoria se eliminó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoCategoriaPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'                    
+
+  /apicall=createingreso:
+    post:
+      tags:
+      - Ingreso
+      summary: Inserta información de un nuevo ingreso en la base de datos
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ingreso'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Ingreso'
+        required: true
+      responses:
+        200:
+          description: (OK) La información del nuevo ingreso se guardó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingreso'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /{apicall=readingreso}:
+    get:
+      tags:
+      - Ingreso
+      summary: Obtiene la información de la base de datos de un ingreso.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=readingreso
+        in: path
+        description: Identificador del ingreso a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información del ingreso se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingreso'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Ingreso'        
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /{apicall=updateingreso}:
+    post:
+      tags:
+      - Ingreso
+      summary: Actualiza la informacion de un ingreso en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=updateingreso
+        in: path
+        description: Identificador del ingreso a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingreso'
+        
+      responses:
+        200:
+          description: (OK) La información del ingreso se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingreso'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Ingreso'          
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /{apicall=deleteingreso}:
+    post:
+      tags:
+        - Ingreso
+      summary: Elimina logicamente un ingreso.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: apicall=deleteingreso
+        in: path
+        description: Identificador del ingreso a obtener
+        required: true
+        schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: (OK) El ingreso se eliminó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoIngresoPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'  
+          
+components:
+  responses:
+    
+    Unauthorized:
+      description: (Unauthorized) No hay autorización para llamar al servicio
+    
+    NotFound:
+      description: (NotFound) No se encontró información 
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      
+    ServerError:
+      description: Error en servidor
+        
+
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticación en API.
+      required: true
+      schema:
+        type: string
+    
+
+  schemas:
+  
+    Presentacion:
+      type: object
+      properties:
+        Id_presentacion:
+          type: integer
+          format: int64
+          example: 1
+        Nombre_Presentacion:
+          type: string
+          description: Nombre de la presentación.
+          example: Liquido
+      xml:
+        name: order
+        
+    ExitoPresentacionPost:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria.
+        idPresentacion: 
+          type: integer
+          enum: [1]
+          description: Id correspondiente a la presentación.   
+          
+    Persona:
+      type: object
+      properties:
+        Num_Id:
+          type: integer
+          format: int64
+          example: 1022924698
+        Tipo_Id:
+          type: string
+          description: Tipo de Identificación.
+          example: C.C
+        Prim_Nombre:
+          type: string
+          description: Primer nombre de la persona
+          example: Ruperto
+        Segun_Nombre:
+          type: integer
+          description: Segundo nombre de la persona (opcional)
+          example: Ramiro
+        Prim_Apellido:
+          type: integer
+          description: Primer apellido de la persona
+          example: Torres
+        Segun_Apellido:
+          type: string
+          description: Segundo apellido de la persona (opcional)
+          example: Hoyos
+        Telefono:
+          type: integer
+          description: Número de telefono de la persona
+          example: 31145889972
+        Direccion:
+          type: string
+          description: Dirección de la casa de la persona
+          example: kra 4 num 67-55
+        Nom_Usuario:
+          type: string
+          description: Nombre que la persona escribio en el sistema
+          example: Rupert015
+        Contra_Usuario:
+          type: string
+          description: Contraseña del usuario en el sistema
+          example: PASSWORD
+      xml:
+        name: order  
+        
+    ExitoPersonaPost:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria.
+        Num_Id: 
+          type: integer
+          enum: [1022924697]
+          description: Id correspondiente a la persona.
+          
+    Categoria:
+      type: object
+      properties:
+        Id_Categoria:
+          type: integer
+          format: int64
+          example: 1
+        Nombre_Categoria:
+          type: string
+          description: Nombre de la categoria.
+          example: Pisos
+      xml:
+        name: categoria
+        
+    ExitoCategoriaPost:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria.
+        idCategoria: 
+          type: integer
+          enum: [1]
+          description: Id correspondiente a la categoria.
+          
+    Ingreso:
+      type: object
+      properties:
+        Id_Ingreso:
+          type: integer
+          format: int64
+          example: 1
+        Fecha_Ingreso:
+          type: string
+          format: date-time
+          description: Fecha en la cual se ingresaron los productos.
+        Cant_Product:
+          type: string
+          description: Cantidad de productos que fueron ingresados.
+          example: 25
+      xml:
+        name: ingreso
+        
+    ExitoIngresoPost:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria.
+        idCategoria: 
+          type: integer
+          enum: [1]
+          description: Id correspondiente al ingreso.           
+
+  
+
+          
+          
+          
